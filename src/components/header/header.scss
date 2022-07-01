@@ -1,0 +1,23 @@
+.header {
+  &__container {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  &__link {
+    color: $black;
+    font-weight: 600;
+    font-size: 16px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    &:hover {
+      color: $success;
+      border-bottom: 1px solid $success;
+    }
+    &.active {
+      color: $success;
+      border-bottom: 1px solid $success;
+    }
+  }
+}

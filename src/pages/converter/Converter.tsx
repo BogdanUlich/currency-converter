@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react'
-import Loader from '../components/Loader'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { convertCurrency, converterSelector, saveConvertData } from '../store/slices/converterSlice'
-import { ConverterData } from '../types'
+import { Loader } from '../../components'
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { convertCurrency, converterSelector, saveConvertData } from '../../store/slices/converterSlice'
+import { ConverterData } from '../../types'
 
 const Converter = () => {
     const dispatch = useAppDispatch()

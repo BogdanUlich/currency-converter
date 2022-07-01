@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { FC, useEffect, useRef, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { currencySelector, setBaseCurrency } from '../store/slices/currencySlice'
-import arrowDown from '../assets/icons/arrow-down.svg'
-import { BaseCurrency } from '../types'
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { currencySelector, setBaseCurrency } from '../../store/slices/currencySlice'
+import arrowDown from '../../assets/icons/arrow-down.svg'
+import { BaseCurrency } from '../../types'
 
 const Select: FC = () => {
     const dispatch = useAppDispatch()

@@ -1,0 +1,54 @@
+.select-wrapper {
+  position: absolute;
+  top: 0;
+  right: 5%;
+  @include lg {
+    position: relative;
+    align-self: flex-end;
+  }
+}
+
+.select {
+  position: relative;
+  &__label {
+    min-width: 220px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    font-weight: 500;
+    span {
+      color: $success;
+      border-bottom: 1px solid $success;
+    }
+  }
+  &__icon {
+    height: 12px;
+    width: 12px;
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+  &__popup {
+    background: $white;
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    top: 30px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 5px #afafaf;
+    overflow: hidden;
+  }
+  &__link {
+    padding: 5px 40px;
+    font-weight: 500;
+    cursor: pointer;
+    &.active {
+      background: lighten($success, 50%);
+    }
+    &:hover {
+      background: lighten($success, 50%);
+    }
+  }
+}

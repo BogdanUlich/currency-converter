@@ -1,0 +1,55 @@
+.exchange-rates {
+  overflow: hidden;
+  height: 100vh;
+  padding-bottom: 50px;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  &__title {
+    padding: 30px 0 45px;
+  }
+  &__body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 60px;
+    @include lg {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 20px;
+      max-width: 400px;
+    }
+    @include sm {
+      padding-bottom: 80px;
+    }
+  }
+  &__list {
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: 0 auto;
+    overflow-y: auto;
+    padding-right: 4px;
+    .currency:nth-child(odd) {
+      background: lighten($success, 55%);
+    }
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background: $light-gray;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $secondary;
+      border-radius: 20px;
+      border: 2px solid $light-gray;
+    }
+  }
+}

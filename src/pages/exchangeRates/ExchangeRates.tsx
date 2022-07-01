@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
-import Currency from '../components/Currency'
-import Loader from '../components/Loader'
-import Select from '../components/Select'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { currencySelector, fetchExchangeRates } from '../store/slices/currencySlice'
+import { Currency, Loader, Select } from '../../components'
+import { useAppDispatch, useAppSelector } from '../../hooks'
+import { currencySelector, fetchExchangeRates } from '../../store/slices/currencySlice'
 
 const ExchangeRates = () => {
     const dispatch = useAppDispatch()
