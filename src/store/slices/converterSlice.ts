@@ -1,39 +1,44 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '..'
 import { ConverterData, ConverterSliceState } from '../../types'
 
 export const convertCurrency = createAsyncThunk<any, ConverterData>('converter/currencyConvert', async (data) => {
   let headers = new Headers()
-  headers.append('apikey', 'DUXMb54S3Z9OFeNCYsaE3yVbnOeLBFi3')
+  headers.append('apikey', 'YwPp31W76McBsbQPbiSyaHThkuwzYgXb')
 
   const requestOptions: any = {
     method: 'GET',
     redirect: 'follow',
     headers,
   }
-  try {
-    const response = await fetch(
-      `https://api.apilayer.com/fixer/convert?to=${data.currencyTo}&from=${data.currencyFrom}&amount=${data.amount}`,
-      requestOptions
-    )
-    const result = await response.json()
+  const response = await fetch(
+    `https://api.apilayer.com/fixer/convert?to=${data.currencyTo}&from=${data.currencyFrom}&amount=${data.amount}`,
+    requestOptions
+  )
+  const result = await response.json()
 
-    return result
-  } catch {
-    alert('Произошла ошибка')
-  }
+  return result
 })
 
 const initialState: ConverterSliceState = {
   converterValue: null,
   rate: null,
+  amount: '',
+  currencyFrom: '',
+  currencyTo: '',
   loading: 'success',
 }
 
 const converterSlice = createSlice({
   name: 'converter',
   initialState,
-  reducers: {},
+  reducers: {
+    saveConvertData: (state, action: PayloadAction<ConverterData>) => {
+      state.amount = action.payload.amount
+      state.currencyFrom = action.payload.currencyFrom
+      state.currencyTo = action.payload.currencyTo
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(convertCurrency.fulfilled, (state, action) => {
@@ -53,6 +58,8 @@ const converterSlice = createSlice({
       })
   },
 })
+
+export const { saveConvertData } = converterSlice.actions
 
 export const converterSelector = (state: RootState) => state.converter
 

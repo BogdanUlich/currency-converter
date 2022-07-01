@@ -300,6 +300,9 @@ body {
       gap: 20px;
       max-width: 400px;
     }
+    @include sm {
+      padding-bottom: 80px;
+    }
   }
   &__list {
     height: 100%;

@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from 'react'
 import Loader from '../components/Loader'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { convertCurrency, converterSelector } from '../store/slices/converterSlice'
+import { convertCurrency, converterSelector, saveConvertData } from '../store/slices/converterSlice'
 import { ConverterData } from '../types'
 
 const Converter = () => {
     const dispatch = useAppDispatch()
 
-    const { converterValue, rate, loading } = useAppSelector(converterSelector)
+    const { converterValue, rate, loading, amount, currencyFrom, currencyTo } = useAppSelector(converterSelector)
 
     const [converterData, setConverterData] = useState<ConverterData>({
         amount: '',
@@ -33,8 +33,9 @@ const Converter = () => {
             currencyTo: e.target.value,
         })
     }
-    const handleConvert = () => {
+    const onConvert = () => {
         if (converterData.amount && converterData.currencyFrom && converterData.currencyTo) {
+            dispatch(saveConvertData(converterData))
             dispatch(convertCurrency(converterData))
         } else {
         }
@@ -83,20 +84,18 @@ const Converter = () => {
                         />
                     </label>
 
-                    <button className="btn" onClick={handleConvert}>
+                    <button className="btn" onClick={onConvert}>
                         Convert
                     </button>
                 </div>
 
                 <div className="converter__result">
                     {converterValue
-                        ? `${
-                              converterData.amount
-                          } ${converterData.currencyFrom.toUpperCase()} = ${converterValue.toFixed(
+                        ? `${amount} ${currencyFrom.toUpperCase()} = ${converterValue.toFixed(
                               2
-                          )} ${converterData.currencyTo.toUpperCase()} (Rate: ${rate?.toFixed(2)})`
+                          )} ${currencyTo.toUpperCase()} (Rate: ${rate?.toFixed(2)})`
                         : ''}
-                    {loading === 'error' ? 'Произошла ошибка, повторите ещё раз' : ''}
+                    {loading === 'error' ? 'An error has occurred, please try again' : ''}
                 </div>
             </div>
             {loading === 'pending' ? <Loader /> : ''}

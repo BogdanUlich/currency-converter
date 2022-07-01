@@ -6,7 +6,7 @@ export const fetchExchangeRates = createAsyncThunk<any, ExchangeRatesAction>(
   'currency/fetchExchangeRates',
   async (fetchInfo) => {
     let headers = new Headers()
-    headers.append('apikey', 'DUXMb54S3Z9OFeNCYsaE3yVbnOeLBFi3')
+    headers.append('apikey', 'YwPp31W76McBsbQPbiSyaHThkuwzYgXb')
 
     const requestOptions: any = {
       method: 'GET',
@@ -18,6 +18,7 @@ export const fetchExchangeRates = createAsyncThunk<any, ExchangeRatesAction>(
       `https://api.apilayer.com/fixer/latest&base=${fetchInfo.baseCurrency}&date=${fetchInfo.currentDate}`,
       requestOptions
     )
+
     const result = await response.json()
 
     return result.rates

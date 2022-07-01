@@ -11,6 +11,9 @@ export type ExchangeRatesAction = {
 export interface ConverterSliceState {
   converterValue: number | null
   rate: number | null
+  amount: string
+  currencyFrom: string
+  currencyTo: string
   loading: 'success' | 'pending' | 'error'
 }
 
