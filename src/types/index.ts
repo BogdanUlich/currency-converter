@@ -8,7 +8,19 @@ export type ExchangeRatesAction = {
   baseCurrency: BaseCurrency
 }
 
-export interface ConverterSliceState {
+export interface IExchangeRates {
+  [key: string]: number
+}
+
+export interface IConverterResult {
+  date: string
+  info: { timestamp: number; rate: number }
+  query: { from: string; to: string; amount: number }
+  result: number
+  success: boolean
+}
+
+export interface IConverterSliceState {
   converterValue: number | null
   rate: number | null
   amount: string
@@ -17,7 +29,7 @@ export interface ConverterSliceState {
   loading: 'success' | 'pending' | 'error'
 }
 
-export interface CurrencySliceState {
+export interface ICurrencySliceState {
   baseCurrency: BaseCurrency
   currencies: any[]
   loading: 'success' | 'pending' | 'error'

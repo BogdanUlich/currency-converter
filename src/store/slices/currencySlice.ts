@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '..'
-import { BaseCurrency, CurrencySliceState, ExchangeRatesAction } from '../../types'
+import { BaseCurrency, ICurrencySliceState, ExchangeRatesAction, IExchangeRates } from '../../types'
 
-export const fetchExchangeRates = createAsyncThunk<any, ExchangeRatesAction>(
+export const fetchExchangeRates = createAsyncThunk<IExchangeRates, ExchangeRatesAction>(
   'currency/fetchExchangeRates',
   async (fetchInfo) => {
     let headers = new Headers()
@@ -14,18 +14,22 @@ export const fetchExchangeRates = createAsyncThunk<any, ExchangeRatesAction>(
       headers,
     }
 
-    const response = await fetch(
-      `https://api.apilayer.com/fixer/latest&base=${fetchInfo.baseCurrency}&date=${fetchInfo.currentDate}`,
-      requestOptions
-    )
+    try {
+      const response = await fetch(
+        `https://api.apilayer.com/fixer/latest&base=${fetchInfo.baseCurrency}&date=${fetchInfo.currentDate}`,
+        requestOptions
+      )
 
-    const result = await response.json()
+      const result = await response.json()
 
-    return result.rates
+      return result.rates
+    } catch (e) {
+      console.error(e)
+    }
   }
 )
 
-const initialState: CurrencySliceState = {
+const initialState: ICurrencySliceState = {
   baseCurrency: 'USD',
   currencies: [],
   loading: 'pending',

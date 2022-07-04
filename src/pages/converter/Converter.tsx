@@ -16,10 +16,12 @@ const Converter = () => {
     })
 
     const onChangeAmount = (e: ChangeEvent<HTMLInputElement>) => {
-        setConverterData({
-            ...converterData,
-            amount: e.target.value,
-        })
+        if (Number(e.target.value) >= 0) {
+            setConverterData({
+                ...converterData,
+                amount: e.target.value,
+            })
+        }
     }
     const onChangeCurrencyFrom = (e: ChangeEvent<HTMLInputElement>) => {
         setConverterData({

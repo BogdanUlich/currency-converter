@@ -1,26 +1,35 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { resourceLimits } from 'worker_threads'
 import { RootState } from '..'
-import { ConverterData, ConverterSliceState } from '../../types'
+import { ConverterData, IConverterResult, IConverterSliceState } from '../../types'
 
-export const convertCurrency = createAsyncThunk<any, ConverterData>('converter/currencyConvert', async (data) => {
-  let headers = new Headers()
-  headers.append('apikey', 'YwPp31W76McBsbQPbiSyaHThkuwzYgXb')
+export const convertCurrency = createAsyncThunk<IConverterResult, ConverterData>(
+  'converter/currencyConvert',
+  async (data) => {
+    let headers = new Headers()
+    headers.append('apikey', 'YwPp31W76McBsbQPbiSyaHThkuwzYgXb')
 
-  const requestOptions: any = {
-    method: 'GET',
-    redirect: 'follow',
-    headers,
+    const requestOptions: any = {
+      method: 'GET',
+      redirect: 'follow',
+      headers,
+    }
+
+    try {
+      const response = await fetch(
+        `https://api.apilayer.com/fixer/convert?to=${data.currencyTo}&from=${data.currencyFrom}&amount=${data.amount}`,
+        requestOptions
+      )
+      const result = await response.json()
+
+      return result
+    } catch (e) {
+      console.log(e)
+    }
   }
-  const response = await fetch(
-    `https://api.apilayer.com/fixer/convert?to=${data.currencyTo}&from=${data.currencyFrom}&amount=${data.amount}`,
-    requestOptions
-  )
-  const result = await response.json()
+)
 
-  return result
-})
-
-const initialState: ConverterSliceState = {
+const initialState: IConverterSliceState = {
   converterValue: null,
   rate: null,
   amount: '',
@@ -42,7 +51,7 @@ const converterSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(convertCurrency.fulfilled, (state, action) => {
-        if (action.payload.info?.rate) {
+        if (action.payload.success) {
           state.converterValue = action.payload.result
           state.rate = action.payload.info.rate
           state.loading = 'success'
